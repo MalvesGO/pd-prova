@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="pdProva">
+<head>
+    <meta charset="UTF-8">
+    <title>Prova de Angular Prodata</title>
+    <link rel="stylesheet" href="node_modules/angular-material/angular-material.css">
+    <link rel="stylesheet" href="node_modules/angular-toastr/dist/angular-toastr.css">
+    <link rel="stylesheet" href="node_modules/angular-ui-grid/ui-grid.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+
+
+</head>
+<body data-ng-controller="UserController">
+
+<nav>
+    <div class="nav-wrapper">
+        <a href="#!" class="brand-logo">{{titulo}}</a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="/"><i class="material-icons left">search</i>Listar Usuários</a></li>
+            <li><a href='/listar'><i class="material-icons left">save</i>Cadastrar Usuários</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="row container">
+    <div>
+        <form name="userForm" novalidate>
+            <div class="panel panel-success">
+                <h1 class="center">Cadastro de Usuários</h1>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group"
+                                 ng-class="{'has-error':userForm.nome.$touched && userForm.nome.$invalid}">
+                                <label class="control-label">Nome</label>
+                                <input type="text"
+                                       class="form-control"
+                                       ng-model="entidade.nome"
+                                       ng-required="true"
+                                       ng-minlength="3"
+                                       ng-maxlength="20"
+                                       name="nome"
+                                       autofocus="true"
+                                       id="nome"
+                                >
+                                <div ng-messages="userForm.nome.$error"
+                                     ng-if="carroForm.nome.$touched"
+                                     class="text-danger">
+                                    <div ng-messages-include="app/template/input-ng-messages.html"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group"
+                                 ng-class="{'has-error':userForm.login.$touched && userForm.login.$invalid}">
+                                <label class="control-label">Login</label>
+                                <input type="text"
+                                       class="form-control"
+                                       ng-model="entidade.login"
+                                       name="login"
+                                       required
+                                >
+                                <div ng-messages="userForm.login.$error"
+                                     ng-if="userForm.login.$touched"
+                                     class="text-danger">
+                                    <div ng-messages-include="app/template/input-ng-messages.html"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group"
+                                 ng-class="{'has-error':userForm.email.$touched && userForm.email.$invalid}">
+                                <label class="control-label">Email</label>
+                                <input type="text"
+                                       class="form-control"
+                                       ng-model="entidade.email"
+                                       name="email"
+                                       required
+                                >
+                                <div ng-messages="userForm.email.$error"
+                                     ng-if="userForm.email.$touched"
+                                     class="text-danger">
+                                    <div ng-messages-include="app/template/input-ng-messages.html"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group"
+                                 ng-class="{'has-error':userForm.password.$touched && userForm.password.$invalid}">
+                                <label class="control-label">Senha</label>
+                                <input type="password"
+                                       class="form-control"
+                                       ng-model="entidade.password"
+                                       name="password"
+                                       required
+                                >
+                                <div ng-messages="userForm.password.$error"
+                                     ng-if="userForm.password.$touched"
+                                     class="text-danger">
+                                    <div ng-messages-include="app/template/input-ng-messages.html"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group"
+                                 ng-class="{'has-error':userForm.confirmPassword.$touched && userForm.confirmPassword.$invalid}">
+                                <label class="control-label">Confirmar Senha</label>
+                                <input type="password"
+                                       class="form-control"
+                                       ng-model="entidade.confirmPassword"
+                                       name="confirmPassword"
+                                       required
+                                >
+                                <div ng-messages="userForm.confirmPassword.$error"
+                                     ng-if="userForm.confirmPassword.$touched"
+                                     class="text-danger">
+                                    <div ng-messages-include="app/template/input-ng-messages.html"></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <div class="panel-footer">
+                    <button class="btn btn-primary navbar-btn"
+                            ng-click="salvar()">
+                        <i class="fa fa-floppy-o"></i>
+                        Salvar
+                    </button>
+
+                    <button class="btn btn-warning navbar-btn"
+                            ng-click="limpar()">
+                        <i class="fa fa-eraser"></i>
+                        Limpar
+                    </button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div ui-grid="gridOptions"></div>
+    </div>
+</div>
+
+<script src="node_modules/jquery/dist/jquery.js"></script>
+<script src="node_modules/angular/angular.js"></script>
+<script src="app/config/pd-prova.js"></script>
+<script src="node_modules/angular-messages/angular-messages.js"></script>
+<script src="node_modules/angular-animate/angular-animate.js"></script>
+<script src="controllers/cadastro-user.controller.js"></script>
+<script src="app/service/alert.service.js" ></script>
+<script src="node_modules/angular-toastr/dist/angular-toastr.tpls.js"></script>
+<script src="node_modules/angular-ui-grid/ui-grid.js"></script>
+
+</body>
+</html>
